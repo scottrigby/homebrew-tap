@@ -3,7 +3,7 @@ cask "whitespace-tools" do
   name "whitespace-tools"
   desc "CLI tools to fix Git whitespace issues"
   homepage "https://github.com/scottrigby/whitespace-tools"
-  version "0.1.0"
+  version "1.0.1"
 
   livecheck do
     skip "Auto-generated on release."
@@ -15,22 +15,22 @@ cask "whitespace-tools" do
   on_macos do
     on_intel do
       url "https://github.com/scottrigby/whitespace-tools/releases/download/v#{version}/whitespace-tools_#{version}_darwin_amd64.tar.gz"
-      sha256 "00a65fd0d0baad03243a0e78e162dd46095270e2afd69112858ab46f3c6c2799"
+      sha256 "638e226f0a241e832e836198e640092a2c29cbf8aa8554898c1ccecd30f41028"
     end
     on_arm do
       url "https://github.com/scottrigby/whitespace-tools/releases/download/v#{version}/whitespace-tools_#{version}_darwin_arm64.tar.gz"
-      sha256 "ee206862f387cfde2ba23095b87a76f476414e8adf9198270543884671231917"
+      sha256 "e5444268118aed8c98a69d81ca5abdfc8684684f607b4709c3cfd76b0f66e53a"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/scottrigby/whitespace-tools/releases/download/v#{version}/whitespace-tools_#{version}_linux_amd64.tar.gz"
-      sha256 "2bfb8ece252df5f73ae62630402dffc11b4bbb94bfa0c7b58192b9e2f223d934"
+      sha256 "726974c1d10608433e853bd90174b5020f76c6ee431bcb6e2b792903213f35cf"
     end
     on_arm do
       url "https://github.com/scottrigby/whitespace-tools/releases/download/v#{version}/whitespace-tools_#{version}_linux_arm64.tar.gz"
-      sha256 "43327745ff62b93f8c59a55d302ac0619940f62b1a99c8971be8fe79df14ea06"
+      sha256 "2721b6905b455d38b9fac2807d989ff88de759bd22acc0bebc1c5c8a4c234cac"
     end
   end
 
