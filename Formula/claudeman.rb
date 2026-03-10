@@ -1,8 +1,8 @@
 class Claudeman < Formula
   desc "Run Claude Code in a Podman container with custom dependencies"
   homepage "https://github.com/scottrigby/claudeman"
-  url "https://github.com/scottrigby/claudeman/archive/refs/tags/v1.2.0.tar.gz"
-  sha256 "9f98254532853a05eb045d6a2310218baf8480ab5fd29821dab45f2939b23824"
+  url "https://github.com/scottrigby/claudeman/archive/refs/tags/v1.3.0.tar.gz"
+  sha256 "58755d64ab347e7ec1bac49e2ca66630a4dd3c3809f246eedec3ec95e4ba2ae8"
   license "Apache-2.0"
   head "https://github.com/scottrigby/claudeman.git", branch: "main"
 
