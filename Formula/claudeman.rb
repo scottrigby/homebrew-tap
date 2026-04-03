@@ -1,42 +1,43 @@
 class Claudeman < Formula
-  desc "Run Claude Code in a Podman container with custom dependencies"
+  desc "Run Claude Code in devcontainers with profiles"
   homepage "https://github.com/scottrigby/claudeman"
   url "https://github.com/scottrigby/claudeman/archive/refs/tags/v2.0.0.tar.gz"
   sha256 "35c570fdffeb37a0ff9c1e7088223509a0268b83af5ecb98fbcbbedd7ae5995b"
   license "Apache-2.0"
   head "https://github.com/scottrigby/claudeman.git", branch: "main"
 
+  depends_on "node"
   depends_on "podman"
-  depends_on "node" => :optional
   depends_on "jq"
 
   def install
-    # Install main script
-    bin.install "claudeman"
-
-    # Install lib files to share directory
-    (share/"claudeman/lib").install Dir["lib/*"]
+    system "npm", "install", "--production", "--ignore-scripts"
+    libexec.install Dir["*", ".npmrc"].select { |f| File.exist?(f) }
+    libexec.install "node_modules"
+    (bin/"claudeman").write_env_script libexec/"claudeman",
+      PATH: "#{Formula["node"].opt_bin}:$PATH"
   end
 
   def caveats
     <<~EOS
       To use claudeman, run from any project directory:
-        claudeman run
 
-      For audio notifications (macOS only), start the listener:
-        node #{share}/claudeman/lib/listener.js
+        claudeman listen    # Start notification listener (separate tab)
+        claudeman init      # Set up hooks in your project
+        claudeman run       # Run Claude in a devcontainer
 
-      First run will install Go and development tools into the container.
-      Subsequent runs reuse installed tools for faster startup.
+      Use built-in or custom profiles to bundle features, firewall
+      domains, caches, and hooks into reusable configurations:
 
-      Configuration:
-        Hooks are merged into .claude/settings.json on each run.
-        Customize per-project by editing .claude/settings.json.
-        Your customizations are preserved during hook updates.
+        claudeman profile list
+        claudeman run --profile=go
+
+      Run `claudeman -h` for full command reference.
     EOS
   end
 
   test do
-    system "#{bin}/claudeman", "help"
+    assert_match "claudeman", shell_output("#{bin}/claudeman -h")
+    assert_match version.to_s, shell_output("#{bin}/claudeman -v").strip
   end
 end
