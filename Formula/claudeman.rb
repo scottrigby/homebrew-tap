@@ -11,9 +11,15 @@ class Claudeman < Formula
   depends_on "jq"
 
   def install
-    system "npm", "install", "--production", "--ignore-scripts"
-    libexec.install Dir["*", ".npmrc"].select { |f| File.exist?(f) }
-    libexec.install "node_modules"
+    # Install all files to libexec
+    libexec.install Dir["*"]
+
+    # Install npm dependencies inside libexec
+    cd libexec do
+      system "npm", "install", "--production", "--ignore-scripts"
+    end
+
+    # Create wrapper script that runs from libexec with node on PATH
     (bin/"claudeman").write_env_script libexec/"claudeman",
       PATH: "#{Formula["node"].opt_bin}:$PATH"
   end
