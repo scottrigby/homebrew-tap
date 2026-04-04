@@ -11,24 +11,25 @@ class Claudeman < Formula
   depends_on "jq"
 
   def install
-    # Install all files to libexec
     libexec.install Dir["*"]
-
-    # Install npm dependencies inside libexec
     cd libexec do
       system "npm", "install", "--production", "--ignore-scripts"
     end
 
-    # Restore portable shebangs on scripts that get copied into containers.
-    # Homebrew rewrites #!/usr/bin/env node to the Homebrew node path, but
-    # these scripts run inside Linux containers where that path doesn't exist.
-    [libexec/"lib/notify.js", libexec/"lib/browser-open.js"].each do |f|
-      inreplace f, %r{^#!.*node.*$}, "#!/usr/bin/env node"
-    end
-
-    # Create wrapper script that runs from libexec with node on PATH
     (bin/"claudeman").write_env_script libexec/"claudeman",
       PATH: "#{Formula["node"].opt_bin}:$PATH"
+  end
+
+  def post_install
+    # Restore portable shebangs on scripts that get copied into Linux
+    # containers at runtime. Homebrew rewrites #!/usr/bin/env node to
+    # the Homebrew node path during install, but that path doesn't
+    # exist inside containers.
+    [libexec/"lib/notify.js", libexec/"lib/browser-open.js"].each do |f|
+      content = File.read(f)
+      content.sub!(%r{^#!.*$}, "#!/usr/bin/env node")
+      File.write(f, content)
+    end
   end
 
   def caveats
