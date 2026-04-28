@@ -1,8 +1,8 @@
 class Claudeman < Formula
   desc "Run Claude Code in devcontainers with profiles"
   homepage "https://github.com/scottrigby/claudeman"
-  url "https://github.com/scottrigby/claudeman/archive/refs/tags/v2.0.1.tar.gz"
-  sha256 "2b996913f29eddb3c7c9215ebf2cd015248663d1f9bd5a5b69c9f603ca8c897c"
+  url "https://github.com/scottrigby/claudeman/archive/refs/tags/v2.1.0.tar.gz"
+  sha256 "8ac1299ec6fbab71310828c688b2a4ac54771fbebbabf58b18e250bfc138b54a"
   license "Apache-2.0"
   head "https://github.com/scottrigby/claudeman.git", branch: "main"
 
